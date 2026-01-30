@@ -1,0 +1,24 @@
+.auth-container {
+  max-width: 420px;
+  text-align: center;
+}
+
+.auth-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.auth-container p {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+.auth-container a {
+  color: var(--accent-2);
+}

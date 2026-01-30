@@ -1,0 +1,48 @@
+.game-history-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.game-history-container h2 {
+  font-size: 1.6rem;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.game-result {
+  text-align: center;
+  color: var(--muted);
+}
+
+.game-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(48px, 64px));
+  gap: 0.5rem;
+}
+
+.grid-cell.filled {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 640px) {
+  .grid-cell.filled {
+    width: 56px;
+    height: 56px;
+  }
+}
