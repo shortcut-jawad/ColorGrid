@@ -2,11 +2,12 @@
   "name": "colorgrid-server",
   "version": "1.0.0",
   "description": "Server for ColorGrid game",
-  "main": "app.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build:client": "npm --prefix ../client run build",
     "build": "tsc",
     "test": "jest"
   },

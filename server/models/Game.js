@@ -7,7 +7,7 @@ const gameSchema = new mongoose.Schema({
   player1_color: { type: String, required: true },
   player2_color: { type: String, required: true },
   final_grid: {
-    type: [[String]], // 2D array of strings representing grid colors
+    type: [[String]], 
     required: true
   },
   result: {

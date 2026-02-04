@@ -5,12 +5,12 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { io, Socket } from "socket.io-client";
+import io from "socket.io-client";
 import { useAuth } from "./AuthContext";
 import { SOCKET_URL } from "../lib/env";
 
 interface SocketContextType {
-  socket: Socket | null;
+  socket: SocketIOClient.Socket | null;
   isConnected: boolean;
 }
 
@@ -20,7 +20,7 @@ const SocketContext = createContext<SocketContextType>({
 });
 
 export function SocketProvider({ children }: { children: ReactNode }) {
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const { user } = useAuth();
 

@@ -1,27 +1,16 @@
-// import { Socket, Server } from "socket.io";
-// import http from "http";
-// import { app } from "./app.js";
-// import { config } from "dotenv";
+import dotenv from "dotenv";
+import { server } from "./app.js";
+import connectToDB from "./config/database.js";
 
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: "*",
-//     methods: ["GET", "POST"],
-//     credentials: false,
-//   },
-// });
+dotenv.config();
 
-// config({
-//   path: "./config.env",
-// });
+const PORT = process.env.PORT || 8000;
 
-// io.on("connection", (socket) => {
-//   console.log("USER CONNECTED:", socket.id);
-// });
+const startServer = async () => {
+  await connectToDB();
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
 
-// server.listen(8000, () => {
-//   console.log("Server is running on port 8000");
-// });
-import "./app.js";
-
+startServer();
