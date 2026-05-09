@@ -5,6 +5,7 @@ import { Server } from "socket.io";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
@@ -26,6 +27,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/games", gameRoutes);
+
+app.get("/health", (req, res) => {
+  const dbState = mongoose.connection.readyState;
+  const dbStatus = dbState === 1 ? "connected" : "disconnected";
+  res.status(200).json({ status: "ok", db: dbStatus });
+});
 
 const publicDir = path.join(__dirname, "public");
 app.use(express.static(publicDir));
