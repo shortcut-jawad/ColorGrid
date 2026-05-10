@@ -4,8 +4,10 @@ import "../css/welcome.css";
 export default function Welcome() {
   return (
     <div className="welcome-container">
-      <h1>Welcome to ColorGrid</h1>
-      <p>A 2-player, turn-based color conquest game</p>
+      <div className="welcome-badge">Turn-Based Strategy Game</div>
+      <h1>ColorGrid</h1>
+      <div className="welcome-divider" />
+      <p>Conquer the grid. Claim territory. Outsmart your opponent in this color conquest battle.</p>
       <div className="welcome-buttons">
         <Link to="/login" className="btn btn-primary">
           Login

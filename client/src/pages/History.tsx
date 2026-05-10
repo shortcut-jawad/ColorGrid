@@ -73,7 +73,7 @@ export default function History() {
     <div className="history-container">
       <h2 className="history-title">Game History</h2>
       {games.length === 0 ? (
-        <p>No games played yet</p>
+        <p style={{ textAlign: "center", color: "var(--muted)" }}>No games played yet</p>
       ) : (
         <ul className="history-list">
           {games.map((game) => {
@@ -88,7 +88,10 @@ export default function History() {
             return (
               <li key={game._id}>
                 <Link to={`/history/${game._id}`}>
-                  Game #{game._id.slice(-6)} {opponent.username} {result}
+                  <span>Game #{game._id.slice(-6)} vs {opponent.username}</span>
+                  <span className={`result-badge result-${result.toLowerCase()}`}>
+                    {result}
+                  </span>
                 </Link>
               </li>
             );

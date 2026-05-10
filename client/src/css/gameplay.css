@@ -11,42 +11,51 @@
   gap: 1.2rem;
   justify-content: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .player-info {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.5rem 0.8rem;
+  padding: 0.55rem 1rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(14, 165, 233, 0.07);
+  border: 1px solid var(--border);
+  transition: border-color 0.22s, box-shadow 0.22s;
+}
+
+.player-info.active-turn {
+  border-color: var(--sky);
+  box-shadow: 0 0 18px var(--sky-pale);
 }
 
 .player-avatar {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--sky);
 }
 
 .vs {
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--muted);
+  font-size: 0.85rem;
 }
 
 .game-status {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.97rem;
   color: var(--muted);
+  padding: 0.48rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid var(--border);
 }
 
-.game-grid {
-  display: grid;
-  gap: 0.5rem;
-}
+.game-grid { display: grid; gap: 0.5rem; }
 
 .grid-row {
   display: grid;
@@ -58,19 +67,20 @@
   width: 64px;
   height: 64px;
   border-radius: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(14, 165, 233, 0.18);
+  background: rgba(14, 165, 233, 0.04);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .grid-cell.clickable:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.3);
+  transform: translateY(-4px) scale(1.05);
+  border-color: var(--sky);
+  box-shadow: 0 8px 22px var(--sky-glow);
 }
 
 .grid-cell.filled {
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
 }
 
 .game-loading {
@@ -81,12 +91,6 @@
 }
 
 @media (max-width: 640px) {
-  .grid-row {
-    grid-template-columns: repeat(5, minmax(44px, 56px));
-  }
-
-  .grid-cell {
-    width: 56px;
-    height: 56px;
-  }
+  .grid-row { grid-template-columns: repeat(5, minmax(44px, 56px)); }
+  .grid-cell { width: 56px; height: 56px; }
 }

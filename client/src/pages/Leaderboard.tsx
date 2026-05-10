@@ -71,6 +71,8 @@ export default function Leaderboard() {
     return <div className="error-message">{error}</div>;
   }
 
+  const medals = ["🥇", "🥈", "🥉"];
+
   return (
     <div className="leaderboard-container">
       <h2>Leaderboard</h2>
@@ -101,9 +103,11 @@ export default function Leaderboard() {
               key={player._id}
               className={`leaderboard-item ${
                 player._id === user._id ? "current-user" : ""
-              }`}
+              } ${index < 3 ? `rank-${index + 1}` : ""}`}
             >
-              <span className="rank">{index + 1}</span>
+              <span className="rank">
+                {index < 3 ? medals[index] : index + 1}
+              </span>
               <div className="player-info">
                 <img
                   src={

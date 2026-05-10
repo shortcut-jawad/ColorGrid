@@ -6,7 +6,11 @@
 }
 
 .game-history-container h2 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, var(--sky-light) 30%, var(--green-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .game-header {
@@ -19,13 +23,22 @@
 
 .game-result {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.game-result h3 {
+  font-size: 1.1rem;
+  color: var(--sky-light);
+}
+
+.game-result p {
+  font-size: 0.88rem;
   color: var(--muted);
 }
 
-.game-grid {
-  display: grid;
-  gap: 0.5rem;
-}
+.game-grid { display: grid; gap: 0.5rem; }
 
 .grid-row {
   display: grid;
@@ -37,12 +50,9 @@
   width: 64px;
   height: 64px;
   border-radius: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.18);
 }
 
 @media (max-width: 640px) {
-  .grid-cell.filled {
-    width: 56px;
-    height: 56px;
-  }
+  .grid-cell.filled { width: 52px; height: 52px; }
 }

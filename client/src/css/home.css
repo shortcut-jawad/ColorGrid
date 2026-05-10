@@ -2,13 +2,67 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
-.home-container h1 {
-  font-size: 2rem;
+.home-hero { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.home-hero h1 {
+  font-size: 1.6rem;
+  color: var(--muted);
+  font-weight: 500;
 }
 
+.home-username {
+  font-size: 2.6rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--sky-light) 30%, var(--green-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+}
+
+/* ── Action cards ── */
+.home-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 1.8rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(14, 165, 233, 0.04);
+  cursor: pointer;
+  color: var(--text);
+  font-family: inherit;
+  transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s, background 0.22s;
+}
+
+.action-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--sky);
+  background: var(--sky-pale);
+  box-shadow: 0 14px 36px var(--sky-glow);
+}
+
+.action-card.green:hover {
+  border-color: var(--green);
+  background: var(--green-pale);
+  box-shadow: 0 14px 36px var(--green-glow);
+}
+
+.action-icon { font-size: 2.1rem; line-height: 1; }
+.action-label { font-size: 1rem; font-weight: 700; }
+.action-desc  { font-size: 0.78rem; color: var(--muted); }
+
+/* fallback for plain buttons */
 .home-buttons {
   display: flex;
   gap: 1rem;

@@ -13,25 +13,34 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      <h1>Welcome, {user.username}!</h1>
-      <div className="home-buttons">
+      <div className="home-hero">
+        <h1>Welcome back,</h1>
+        <div className="home-username">{user.username}</div>
+      </div>
+      <div className="home-actions">
         <button
-          className="btn btn-primary"
+          className="action-card"
           onClick={() => navigate("/newgame/waiting")}
         >
-          Play Game
+          <span className="action-icon">⚔️</span>
+          <span className="action-label">Play Game</span>
+          <span className="action-desc">Find an opponent</span>
         </button>
         <button
-          className="btn btn-secondary"
+          className="action-card green"
           onClick={() => navigate("/leaderboard")}
         >
-          Leaderboard
+          <span className="action-icon">🏆</span>
+          <span className="action-label">Leaderboard</span>
+          <span className="action-desc">View top players</span>
         </button>
         <button
-          className="btn btn-secondary"
+          className="action-card green"
           onClick={() => navigate("/history")}
         >
-          Game History
+          <span className="action-icon">📋</span>
+          <span className="action-label">Game History</span>
+          <span className="action-desc">Review past matches</span>
         </button>
       </div>
     </div>
