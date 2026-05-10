@@ -7,10 +7,8 @@
 .history-title {
   text-align: center;
   font-size: 2rem;
-  background: linear-gradient(135deg, var(--sky-light) 30%, var(--green-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--sky-dark);
+  font-weight: 700;
 }
 
 .history-list {
@@ -27,24 +25,24 @@
   gap: 1rem;
   padding: 1rem 1.3rem;
   border-radius: 14px;
-  background: rgba(14, 165, 233, 0.04);
-  border: 1px solid rgba(14, 165, 233, 0.14);
+  background: var(--bg);
+  border: 1.5px solid rgba(91, 200, 245, 0.20);
   color: var(--text);
   text-decoration: none;
-  transition: border-color 0.2s, background 0.2s, transform 0.18s;
+  transition: border-color 0.2s, background 0.2s, transform 0.18s, box-shadow 0.2s;
 }
 
 .history-list li a:hover {
   border-color: var(--sky);
   background: var(--sky-pale);
   transform: translateX(4px);
+  box-shadow: var(--shadow);
 }
 
-/* Result badges */
 .result-badge {
   font-size: 0.75rem;
   font-weight: 700;
-  padding: 0.24rem 0.7rem;
+  padding: 0.26rem 0.72rem;
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -53,18 +51,18 @@
 
 .result-won {
   background: var(--green-pale);
-  color: var(--green-light);
-  border: 1px solid rgba(16, 185, 129, 0.30);
+  color: var(--green-dark);
+  border: 1.5px solid var(--border-green);
 }
 
 .result-lost {
-  background: rgba(239, 68, 68, 0.10);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.28);
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1.5px solid #fca5a5;
 }
 
 .result-draw {
   background: var(--sky-pale);
-  color: var(--sky-light);
-  border: 1px solid rgba(14, 165, 233, 0.28);
+  color: var(--sky-dark);
+  border: 1.5px solid var(--border);
 }

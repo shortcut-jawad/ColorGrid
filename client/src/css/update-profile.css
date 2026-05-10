@@ -7,27 +7,25 @@
 .update-profile-container h2 {
   text-align: center;
   font-size: 2rem;
-  background: linear-gradient(135deg, var(--sky-light) 30%, var(--green-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--sky-dark);
+  font-weight: 700;
 }
 
 .password-section {
   margin-top: 0.8rem;
   padding-top: 1.2rem;
-  border-top: 1px solid rgba(14, 165, 233, 0.18);
+  border-top: 1.5px solid rgba(91, 200, 245, 0.20);
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
 }
 
 .password-section h3 {
-  font-size: 1rem;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.82rem;
+  font-size: 0.80rem;
+  font-weight: 700;
 }
 
 .button-group {
