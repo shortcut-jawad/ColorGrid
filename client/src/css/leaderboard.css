@@ -49,6 +49,10 @@
   border-color: transparent;
 }
 
+.leaderboard-header span {
+  text-align: center;
+}
+
 .leaderboard-item.rank-1 {
   border-color: #F5C842;
   background: #FFFBEB;
