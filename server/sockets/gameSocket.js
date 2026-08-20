@@ -69,20 +69,33 @@ async function finishGame(io, game, result) {
     User.findById(game.player2._id),
   ]);
 
-  let player1Coins = player1Db?.coins ?? game.player1.coins ?? 0;
-  let player2Coins = player2Db?.coins ?? game.player2.coins ?? 0;
+  let p1Inc = { wins: 0, losses: 0, draws: 0 };
+  let p2Inc = { wins: 0, losses: 0, draws: 0 };
 
   if (result === "player1") {
     player1Coins += 200;
     player2Coins = Math.max(0, player2Coins - 200);
+    p1Inc.wins = 1;
+    p2Inc.losses = 1;
   } else if (result === "player2") {
     player2Coins += 200;
     player1Coins = Math.max(0, player1Coins - 200);
+    p2Inc.wins = 1;
+    p1Inc.losses = 1;
+  } else if (result === "draw") {
+    p1Inc.draws = 1;
+    p2Inc.draws = 1;
   }
 
   await Promise.all([
-    User.findByIdAndUpdate(game.player1._id, { coins: player1Coins }),
-    User.findByIdAndUpdate(game.player2._id, { coins: player2Coins }),
+    User.findByIdAndUpdate(game.player1._id, {
+      coins: player1Coins,
+      $inc: p1Inc,
+    }),
+    User.findByIdAndUpdate(game.player2._id, {
+      coins: player2Coins,
+      $inc: p2Inc,
+    }),
   ]);
 
   game.player1.coins = player1Coins;
