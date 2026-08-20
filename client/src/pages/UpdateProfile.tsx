@@ -4,9 +4,10 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import "../css/update-profile.css";
 import { API_URL } from "../lib/env";
+import { compressImage } from "../lib/compressImage";
 
 export default function UpdateProfile() {
-  const { user, updateUser, refreshUser } = useAuth();
+  const { user, updateUser } = useAuth();
   const [username, setUsername] = useState(user?.username || "");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -24,21 +25,20 @@ export default function UpdateProfile() {
     return null;
   }
 
-  const handleFileChange = (file?: File) => {
+  const handleFileChange = async (file?: File) => {
     if (!file) {
       setProfilePreview(user.profile_picture_url || "");
       setRemovePicture(false);
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setProfilePreview(reader.result);
-        setRemovePicture(false);
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressed = await compressImage(file);
+      setProfilePreview(compressed);
+      setRemovePicture(false);
+    } catch {
+      setError("Failed to process image");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -100,7 +100,6 @@ export default function UpdateProfile() {
       setProfilePreview(response.data.profile_picture_url || "");
       setRemovePicture(false);
       setSuccess("Profile updated successfully");
-      await refreshUser();
 
       // Clear password fields
       setCurrentPassword("");

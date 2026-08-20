@@ -5,22 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import "../css/history-detail.css";
 import { API_URL } from "../lib/env";
 
-interface Player {
-  _id: string;
-  username: string;
-  profile_picture_url?: string;
-  color: string;
-}
-
-interface GameHistoryData {
-  _id: string;
-  player1: Player;
-  player2: Player;
-  final_grid: string[][];
-  winner_id?: string;
-  isDraw: boolean;
-  created_at: string;
-}
+import { GameHistoryData } from "../types/game";
 
 export default function GameHistory() {
   const { game_id } = useParams<{ game_id: string }>();
@@ -29,10 +14,6 @@ export default function GameHistory() {
   const [error, setError] = useState("");
   const { user } = useAuth();
   const navigate = useNavigate();
-  // const PORT = process.env.PORT || 8000;
-  // app.listen(PORT, () => {
-  //   console.log(`Server is running on port ${PORT}`);
-  // });
 
   useEffect(() => {
     if (!user) {

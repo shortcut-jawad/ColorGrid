@@ -4,23 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import "../css/gameplay.css";
 
-interface Player {
-  _id: string;
-  username: string;
-  profile_picture_url?: string;
-  color: string;
-}
-
-interface GameState {
-  game_id?: string;
-  grid: string[][];
-  currentTurn: string;
-  player1: Player;
-  player2: Player;
-  status: "playing" | "finished";
-  winnerId?: string | null;
-  isDraw?: boolean;
-}
+import { GameState } from "../types/game";
 
 export default function Game() {
   const { game_id } = useParams<{ game_id: string }>();

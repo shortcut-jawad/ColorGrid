@@ -19,5 +19,9 @@ const gameSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now }
 });
 
+gameSchema.index({ player1_id: 1 });
+gameSchema.index({ player2_id: 1 });
+gameSchema.index({ created_at: -1 });
+
 const Game = mongoose.model("Game", gameSchema);
 export default Game;

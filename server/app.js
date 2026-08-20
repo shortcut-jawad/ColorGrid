@@ -20,8 +20,8 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors({ origin: CLIENT_ORIGIN }));
-app.use(express.json({ limit: "5mb" }));
-app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+app.use(express.json({ limit: "500kb" }));
+app.use(express.urlencoded({ extended: true, limit: "500kb" }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -38,6 +38,24 @@ const publicDir = path.join(__dirname, "public");
 app.use(express.static(publicDir));
 app.get("*", (req, res) => {
   res.sendFile(path.join(publicDir, "index.html"));
+});
+
+// Centralized Express Error Handler
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR HANDLER:", err.stack || err);
+  const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(status).json({ message });
+});
+
+// Global Process Handlers to prevent abrupt crashes
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught Exception thrown:", error);
+  // In production, you might want to gracefully shutdown/restart
 });
 
 const server = http.createServer(app);

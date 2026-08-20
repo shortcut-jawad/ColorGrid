@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../css/signup.css";
 
+import { compressImage } from "../lib/compressImage";
+
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,19 +14,18 @@ export default function Signup() {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleFileChange = (file?: File) => {
+  const handleFileChange = async (file?: File) => {
     if (!file) {
       setProfilePreview("");
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setProfilePreview(reader.result);
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressed = await compressImage(file);
+      setProfilePreview(compressed);
+    } catch {
+      setError("Failed to process image");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

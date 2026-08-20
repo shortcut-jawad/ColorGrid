@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .get(`${API_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then((response) => {
+        .then((response: any) => {
           setUser(response.data);
         })
         .catch(() => {
