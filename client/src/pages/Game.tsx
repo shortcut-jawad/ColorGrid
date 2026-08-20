@@ -106,13 +106,15 @@ export default function Game() {
     );
   }
 
+  const currentUserId = user?._id ? String(user._id) : "";
+  const winnerIdStr = gameState.winnerId ? String(gameState.winnerId) : "";
+
   const isMyTurn = gameState.currentTurn === user?._id;
-  const didWin = gameState.winnerId && gameState.winnerId === user?._id;
-  const didLose =
-    gameState.winnerId &&
-    user?._id &&
-    gameState.winnerId !== user._id &&
-    !gameState.isDraw;
+  const isDraw = Boolean(gameState.isDraw);
+  const didWin = Boolean(winnerIdStr && winnerIdStr === currentUserId);
+  const didLose = Boolean(
+    winnerIdStr && currentUserId && winnerIdStr !== currentUserId && !isDraw
+  );
   const lostWithZero = didLose && (user?.coins ?? 0) === 0;
 
   return (
@@ -148,17 +150,17 @@ export default function Game() {
       <div className="game-status">
         {gameState.status === "finished" ? (
           <>
-            {gameState.isDraw ? (
+            {isDraw ? (
               <p>Game Over - Draw!</p>
-            ) : (
+            ) : didWin ? (
+              <p>Game Over - You Won (+200 coins)!</p>
+            ) : didLose ? (
               <p>
                 Game Over -{" "}
-                {didWin
-                  ? "You Won (+200 coins)!"
-                  : lostWithZero
-                  ? "You Lost"
-                  : "You Lost (-200 coins)"}
+                {lostWithZero ? "You Lost" : "You Lost (-200 coins)"}
               </p>
+            ) : (
+              <p>Game Over!</p>
             )}
             <button onClick={handlePlayAgain} className="btn btn-primary">
               Play Again

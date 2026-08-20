@@ -27,6 +27,8 @@ function toClientGameState(game) {
     player1: game.player1,
     player2: game.player2,
     status: game.status,
+    winnerId: game.winnerId || null,
+    isDraw: game.isDraw || false,
   };
 }
 
@@ -48,6 +50,9 @@ async function finishGame(io, game, result) {
   let winnerId = null;
   if (result === "player1") winnerId = game.player1._id;
   if (result === "player2") winnerId = game.player2._id;
+
+  game.winnerId = winnerId;
+  game.isDraw = result === "draw";
 
   const createdGame = await Game.create({
     player1_id: game.player1._id,
@@ -82,6 +87,8 @@ async function finishGame(io, game, result) {
 
   game.player1.coins = player1Coins;
   game.player2.coins = player2Coins;
+
+  io.to(game.roomId).emit("game_state", toClientGameState(game));
 
   io.to(game.roomId).emit("game_end", {
     winnerId,
