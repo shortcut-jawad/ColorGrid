@@ -22,10 +22,12 @@ export default function Leaderboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (authLoading) return;
+
     if (!user) {
       navigate("/login");
       return;
@@ -50,15 +52,13 @@ export default function Leaderboard() {
     };
 
     fetchLeaderboard();
-  }, [user, navigate]);
+  }, [user, authLoading, navigate]);
 
   const filteredPlayers = players.filter((player) =>
     player.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (!user) return null;
-
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="loading">
         <div className="loading-spinner"></div>
@@ -70,6 +70,8 @@ export default function Leaderboard() {
   if (error) {
     return <div className="error-message">{error}</div>;
   }
+
+  if (!user) return null;
 
   const medals = ["🥇", "🥈", "🥉"];
 

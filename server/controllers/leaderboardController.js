@@ -7,109 +7,51 @@ async function getLeaderboard(req, res) {
     const users = await User.find()
       .sort({ coins: -1 })
       .limit(100)
+      .select("_id username profile_picture_url coins")
       .lean();
+
+    if (!users || users.length === 0) {
+      return res.json([]);
+    }
 
     const userIds = users.map((user) => user._id);
 
-    // 2. Perform aggregation on Game collection to compute stats only for these 100 users
-    const stats = await Game.aggregate([
-      {
-        $match: {
-          $or: [
-            { player1_id: { $in: userIds } },
-            { player2_id: { $in: userIds } },
-          ],
-        },
-      },
-      {
-        $project: {
-          players: [
-            {
-              userId: "$player1_id",
-              role: "player1",
-              result: "$result",
-            },
-            {
-              userId: "$player2_id",
-              role: "player2",
-              result: "$result",
-            },
-          ],
-        },
-      },
-      { $unwind: "$players" },
-      { $match: { "players.userId": { $in: userIds } } },
-      {
-        $group: {
-          _id: "$players.userId",
-          wins: {
-            $sum: {
-              $cond: [
-                {
-                  $or: [
-                    {
-                      $and: [
-                        { $eq: ["$players.result", "player1"] },
-                        { $eq: ["$players.role", "player1"] },
-                      ],
-                    },
-                    {
-                      $and: [
-                        { $eq: ["$players.result", "player2"] },
-                        { $eq: ["$players.role", "player2"] },
-                      ],
-                    },
-                  ],
-                },
-                1,
-                0,
-              ],
-            },
-          },
-          losses: {
-            $sum: {
-              $cond: [
-                {
-                  $or: [
-                    {
-                      $and: [
-                        { $eq: ["$players.result", "player1"] },
-                        { $eq: ["$players.role", "player2"] },
-                      ],
-                    },
-                    {
-                      $and: [
-                        { $eq: ["$players.result", "player2"] },
-                        { $eq: ["$players.role", "player1"] },
-                      ],
-                    },
-                  ],
-                },
-                1,
-                0,
-              ],
-            },
-          },
-          draws: {
-            $sum: {
-              $cond: [{ $eq: ["$players.result", "draw"] }, 1, 0],
-            },
-          },
-        },
-      },
-    ]);
+    // 2. Fetch all games involving these top 100 users
+    const games = await Game.find({
+      $or: [
+        { player1_id: { $in: userIds } },
+        { player2_id: { $in: userIds } },
+      ],
+    })
+      .select("player1_id player2_id result")
+      .lean();
 
-    // 3. Map the aggregated stats to a lookup Map
+    // 3. Compute wins, losses, draws in memory for these top 100 users
     const statsMap = new Map();
-    stats.forEach((stat) => {
-      statsMap.set(stat._id.toString(), {
-        wins: stat.wins,
-        losses: stat.losses,
-        draws: stat.draws,
-      });
+    users.forEach((user) => {
+      statsMap.set(user._id.toString(), { wins: 0, losses: 0, draws: 0 });
     });
 
-    // 4. Build leaderboard response
+    games.forEach((game) => {
+      const p1Id = game.player1_id ? game.player1_id.toString() : null;
+      const p2Id = game.player2_id ? game.player2_id.toString() : null;
+
+      if (p1Id && statsMap.has(p1Id)) {
+        const stats = statsMap.get(p1Id);
+        if (game.result === "player1") stats.wins += 1;
+        else if (game.result === "player2") stats.losses += 1;
+        else if (game.result === "draw") stats.draws += 1;
+      }
+
+      if (p2Id && statsMap.has(p2Id)) {
+        const stats = statsMap.get(p2Id);
+        if (game.result === "player2") stats.wins += 1;
+        else if (game.result === "player1") stats.losses += 1;
+        else if (game.result === "draw") stats.draws += 1;
+      }
+    });
+
+    // 4. Construct response array
     const leaderboard = users.map((user) => ({
       _id: user._id,
       username: user.username,
