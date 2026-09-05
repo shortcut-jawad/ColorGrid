@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [About the Project](#about-the-project)
 - [Visual Showcase (Screenshots 1-10)](#visual-showcase-screenshots-1-10)
@@ -26,7 +26,7 @@
 
 ---
 
-## 🎯 About the Project
+## About the Project
 
 **ColorGrid** is a competitive, real-time turn-based multiplayer web game inspired by tactical grid mechanics. Two players are matched randomly, assigned distinct colors, and placed on a 5x5 grid. On each turn, a player claims an empty cell with their color. 
 
@@ -36,7 +36,7 @@ The project features a persistent persistent navigation system, client-side imag
 
 ---
 
-## 🖼️ Visual Showcase (Screenshots 1-10)
+## Visual Showcase (Screenshots 1-10)
 
 Here is the complete step-by-step walkthrough of ColorGrid in sequential order:
 
@@ -82,19 +82,19 @@ Profile management interface for updating display name, password, and compressed
 
 ---
 
-## ✨ Core Features
+## Core Features
 
-- **⚡ Real-Time Socket Gameplay:** Instant turn synchronization and move broadcasting powered by Socket.io without any page reloads.
-- **🏝️ Island Conquest Logic:** Evaluates 4-directional connected cells (vertical/horizontal) using recursive DFS flood fill.
-- **⏱️ Reconnection & Grace Period:** 10-second disconnection buffer allowing players to refresh or reconnect without forfeiting active matches.
-- **🪙 Economy System:** Starting balance of 1000 coins per user, with +200 coins awarded for victories and -200 deducted for losses (down to 0 min).
-- **📊 Optimized Leaderboard:** Indexed MongoDB query with cached user stat tracking delivering sub-10ms leaderboard load times.
-- **🖼️ Client-Side Avatar Compression:** Automatic HTML5 Canvas image compression for profile pictures before upload.
-- **🛡️ Rate-Limited Authentication:** Express rate-limiters protecting signup and login endpoints against brute-force attacks.
+- **Real-Time Socket Gameplay:** Instant turn synchronization and move broadcasting powered by Socket.io without any page reloads.
+- **Island Conquest Logic:** Evaluates 4-directional connected cells (vertical/horizontal) using recursive DFS flood fill.
+- **Reconnection & Grace Period:** 10-second disconnection buffer allowing players to refresh or reconnect without forfeiting active matches.
+- **Economy System:** Starting balance of 1000 coins per user, with +200 coins awarded for victories and -200 deducted for losses (down to 0 min).
+- **Optimized Leaderboard:** Indexed MongoDB query with cached user stat tracking delivering sub-10ms leaderboard load times.
+- **Client-Side Avatar Compression:** Automatic HTML5 Canvas image compression for profile pictures before upload.
+- **Rate-Limited Authentication:** Express rate-limiters protecting signup and login endpoints against brute-force attacks.
 
 ---
 
-## 🎮 Game Logic & Rules
+## Game Logic & Rules
 
 1. **Match Initialization:**
    - Players emit `find_match` to join the waiting room.
@@ -112,7 +112,7 @@ Profile management interface for updating display name, password, and compressed
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack & Architecture
 
 - **Frontend:** React (TypeScript), Vite, React Router v6, Axios, Socket.io-Client, Vanilla CSS (Design Tokens & Glassmorphism)
 - **Backend:** Node.js, Express.js, Socket.io, MongoDB, Mongoose ODM, BcryptJS, JSON Web Tokens (JWT)
@@ -141,7 +141,7 @@ ColorGrid/
 
 ---
 
-## 📥 Installation & Local Setup
+## Installation & Local Setup
 
 ### Prerequisites
 - **Node.js**: v18.x or higher
@@ -183,7 +183,7 @@ Open your browser at `http://localhost:5173` to play!
 
 ---
 
-## ⚙️ Environment Configuration
+## Environment Configuration
 
 Create a `.env` file in the `server/` directory:
 
@@ -201,7 +201,7 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## 🗄️ Database Schemas
+## Database Schemas
 
 ### User Schema (`User`)
 ```typescript
@@ -234,7 +234,7 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## 🔌 Socket.io Architecture & Events
+## Socket.io Architecture & Events
 
 | Event Name | Direction | Payload | Description |
 | :--- | :--- | :--- | :--- |
@@ -248,7 +248,7 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## 🌐 API Endpoints Reference
+## API Endpoints Reference
 
 ### Authentication Routes (`/api/auth`)
 - `POST /api/auth/signup` - Register a new account (Rate Limited)
@@ -265,7 +265,7 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## ⚡ Performance & Security Enhancements
+## Performance & Security Enhancements
 
 1. **IPv4 Host Binding:** Bound local MongoDB connections to `127.0.0.1` to bypass Node.js 18+ dual-stack IPv6 DNS resolution delays.
 2. **Payload Compression:** Client-side HTML5 canvas compression caps profile picture payloads under 500KB before transmission.
@@ -274,7 +274,7 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## 📜 License & Acknowledgments
+## License & Acknowledgments
 
 Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
 
